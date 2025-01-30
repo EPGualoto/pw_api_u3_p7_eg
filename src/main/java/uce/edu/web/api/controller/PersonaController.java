@@ -5,6 +5,7 @@ import uce.edu.web.api.service.to.PersonaTo;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 
 @Path("/personas")
 public class PersonaController{
@@ -14,10 +15,11 @@ public class PersonaController{
 
     @GET
     @Path("/buscar")
-    public PersonaTo buscarPorId() {
+    public Response buscarPorId( ) {
+    //public PersonaTo buscarPorId() {
         Integer id=1;
-        return this.iPersonaService.buscarPorId(id);
-        //return Response.ok(this.iPersonaService.buscarPorId(id)).build();
+        //return this.iPersonaService.buscarPorId(id);
+        return Response.ok(this.iPersonaService.buscarPorId(id)).build();
     }
 
     public void guardar(PersonaTo persona) {
