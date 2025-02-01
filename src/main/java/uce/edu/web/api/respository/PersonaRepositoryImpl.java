@@ -32,7 +32,7 @@ public class PersonaRepositoryImpl implements IPersonaRepository{
 
     @Override
     public void eliminar(Integer id) {
-        this.entityManager.persist(id);
+        this.entityManager.remove(id);
     }
 
 }
