@@ -1,7 +1,10 @@
 package uce.edu.web.api.respository;
 
+import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import uce.edu.web.api.respository.modelo.Estudiante;
@@ -17,6 +20,27 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
     public Estudiante buscarPorId(Integer id) {
         return this.entityManager.find(Estudiante.class, id);
 
+    }
+
+    @Override
+    public List<Estudiante> buscarTodos() {
+        TypedQuery<Estudiante> myQuery =this.entityManager.createQuery("SELECT e from Estudiante e", Estudiante.class);
+        return myQuery.getResultList();
+    }
+
+    @Override
+    public List<Estudiante> buscarPorNombre(String nombre) {
+        TypedQuery<Estudiante> myQuery =this.entityManager.createQuery("SELECT e from Estudiante e WHERE e.nombre =:nombre", Estudiante.class);
+        myQuery.setParameter("nombre", nombre);
+        return myQuery.getResultList();
+    }
+
+    @Override
+    public List<Estudiante> buscarPorNombreApellido(String nombre, String apellido) {
+        TypedQuery<Estudiante> myQuery=this.entityManager.createQuery("SELECT e from Estudiante e WHERE e.nombre =:nombre AND e.apellido =:apellido", Estudiante.class);
+        myQuery.setParameter("nombre", nombre);
+        myQuery.setParameter("apellido", apellido);
+        return myQuery.getResultList();
     }
 
     @Override
