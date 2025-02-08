@@ -17,10 +17,12 @@ public class PersonaRepositoryImpl implements IPersonaRepository{
     private EntityManager entityManager;
 
     @Override
-    public Persona buscarPorId(Integer id) {
-        return this.entityManager.find(Persona.class, id);
-        
+public Persona buscarPorId(Integer id) {
+    if (id == null) {
+        return null;
     }
+    return this.entityManager.find(Persona.class, id);
+}
 
     @Override
     public void insertar(Persona persona) {

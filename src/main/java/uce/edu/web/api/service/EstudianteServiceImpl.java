@@ -7,9 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import uce.edu.web.api.respository.IEstudianteRepository;
 import uce.edu.web.api.respository.modelo.Estudiante;
-import uce.edu.web.api.respository.modelo.Persona;
 import uce.edu.web.api.service.to.EstudianteTo;
-import uce.edu.web.api.service.to.PersonaTo;
 
 @ApplicationScoped
 public class EstudianteServiceImpl implements IEstudianteService {

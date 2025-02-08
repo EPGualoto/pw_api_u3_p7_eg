@@ -14,6 +14,8 @@ public class PersonaServiceImpl implements IPersonaService {
     @Inject
     private IPersonaRepository iPersonaRepository;
 
+    
+
     private Function<Persona, PersonaTo> mapTo = p -> {
         PersonaTo pTo = new PersonaTo(p.getId(), p.getNombre(), p.getApellido(), p.getFechaNacimiento());
         return pTo;
@@ -25,10 +27,15 @@ public class PersonaServiceImpl implements IPersonaService {
     };
 
     @Override
-    public PersonaTo buscarPorId(Integer id) {
-        Persona per = this.iPersonaRepository.buscarPorId(id);
-        return this.mapTo.apply(per);
-    }
+    public PersonaTo buscarPorId(Integer id) {    
+         if (id == null) {         
+        return null; 
+         }    
+          Persona per = this.iPersonaRepository.buscarPorId(id);         
+          if (per == null) {       
+            return null; 
+            } return this.mapTo.apply(per); 
+        }
 
     @Override
     public void guardar(PersonaTo persona) {
