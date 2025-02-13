@@ -13,6 +13,9 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.QueryParam;
 
 @Path("/personas")
@@ -23,27 +26,32 @@ public class PersonaController {
 
     @GET
     @Path("/{id}")
-    public PersonaTo buscarPorId(@PathParam("id") Integer id) {
-        return this.iPersonaService.buscarPorId(id);
+    @Produces(MediaType.APPLICATION_XML)
+    public Response buscarPorId(@PathParam("id") Integer id) {
+        return Response.status(240).header("mensaje", "Persona creada pero en proceso de validacion....")
+                .header("valor1", 500).entity(this.iPersonaService.buscarPorId(id)).build();
+        // return
+        // Response.status(Response.Status.OK).entity(this.iPersonaService.buscarPorId(id)).build();
     }
 
     @GET
     @Path("")
-    public List<PersonaTo> buscarTodos(){
-        return this.iPersonaService.buscarTodos();   
-     }
+    public List<PersonaTo> buscarTodos() {
+        return this.iPersonaService.buscarTodos();
+    }
 
     @GET
     @Path("/porNombre")
-    public List<PersonaTo> buscarPorNombre(@QueryParam("nombre") String nombre){
-        return this.iPersonaService.buscarPorNombre(nombre);   
-     }
+    public List<PersonaTo> buscarPorNombre(@QueryParam("nombre") String nombre) {
+        return this.iPersonaService.buscarPorNombre(nombre);
+    }
 
     @GET
     @Path("/porNombreApellido")
-    public List<PersonaTo> buscarPorNombreApellido(@QueryParam("nombre") String nombre, @QueryParam("apellido") String apellido){
+    public List<PersonaTo> buscarPorNombreApellido(@QueryParam("nombre") String nombre,
+            @QueryParam("apellido") String apellido) {
         return this.iPersonaService.buscarPorNombreApellido(nombre, apellido);
-     }
+    }
 
     @POST
     @Path("")

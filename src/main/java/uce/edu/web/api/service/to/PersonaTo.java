@@ -3,6 +3,10 @@ package uce.edu.web.api.service.to;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class PersonaTo implements Serializable {
     private Integer id;
     private String nombre;
@@ -21,6 +25,7 @@ public class PersonaTo implements Serializable {
     }
 
     // SET Y GET
+    @XmlElement
     public Integer getId() {
         return id;
     }
@@ -29,6 +34,7 @@ public class PersonaTo implements Serializable {
         this.id = id;
     }
 
+    @XmlElement
     public String getNombre() {
         return nombre;
     }
@@ -37,6 +43,7 @@ public class PersonaTo implements Serializable {
         this.nombre = nombre;
     }
 
+    @XmlElement
     public String getApellido() {
         return apellido;
     }
@@ -45,6 +52,7 @@ public class PersonaTo implements Serializable {
         this.apellido = apellido;
     }
 
+    @XmlElement
     public LocalDateTime getFechaNacimiento() {
         return fechaNacimiento;
     }
