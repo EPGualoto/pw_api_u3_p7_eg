@@ -17,13 +17,14 @@ public class PersonaRepositoryImpl implements IPersonaRepository{
     private EntityManager entityManager;
 
     @Override
-public Persona buscarPorId(Integer id) {
-    if (id == null) {
-        return null;
+    public Persona buscarPorId(Integer id) {
+        try {
+            return this.entityManager.find(Persona.class, id);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
-    return this.entityManager.find(Persona.class, id);
-}
-
     @Override
     public void insertar(Persona persona) {
         this.entityManager.persist(persona);
@@ -42,20 +43,20 @@ public Persona buscarPorId(Integer id) {
 
     @Override
     public List<Persona> buscarTodos() {
-        TypedQuery<Persona> myQuery =this.entityManager.createQuery("SELECT p from Persona p", Persona.class);
+        TypedQuery<Persona> myQuery =this.entityManager.createQuery("SELECT p FROM Persona p", Persona.class);
         return myQuery.getResultList();
     }
 
     @Override
     public List<Persona> buscarPorNombre(String nombre) {
-        TypedQuery<Persona> myQuery =this.entityManager.createQuery("SELECT p from Persona p WHERE p.nombre =:nombre", Persona.class);
+        TypedQuery<Persona> myQuery =this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre =:nombre", Persona.class);
         myQuery.setParameter("nombre", nombre);
         return myQuery.getResultList();
     }
 
     @Override
     public List<Persona> buscarPorNombreApellido(String nombre, String apellido) {
-        TypedQuery<Persona> myQuery=this.entityManager.createQuery("SELECT p from Persona p WHERE p.nombre =:nombre AND p.apellido =:apellido", Persona.class);
+        TypedQuery<Persona> myQuery=this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.nombre =:nombre AND p.apellido =:apellido", Persona.class);
         myQuery.setParameter("nombre", nombre);
         myQuery.setParameter("apellido", apellido);
         return myQuery.getResultList();

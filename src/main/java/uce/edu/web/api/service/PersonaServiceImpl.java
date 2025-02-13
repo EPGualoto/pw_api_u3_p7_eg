@@ -2,6 +2,7 @@ package uce.edu.web.api.service;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -14,8 +15,6 @@ public class PersonaServiceImpl implements IPersonaService {
     @Inject
     private IPersonaRepository iPersonaRepository;
 
-    
-
     private Function<Persona, PersonaTo> mapTo = p -> {
         PersonaTo pTo = new PersonaTo(p.getId(), p.getNombre(), p.getApellido(), p.getFechaNacimiento());
         return pTo;
@@ -27,15 +26,13 @@ public class PersonaServiceImpl implements IPersonaService {
     };
 
     @Override
-    public PersonaTo buscarPorId(Integer id) {    
-         if (id == null) {         
-        return null; 
-         }    
-          Persona per = this.iPersonaRepository.buscarPorId(id);         
-          if (per == null) {       
-            return null; 
-            } return this.mapTo.apply(per); 
+    public PersonaTo buscarPorId(Integer id) {
+        Persona per = this.iPersonaRepository.buscarPorId(id);
+        if (per == null) {
+            return null;
         }
+        return this.mapTo.apply(per);
+    }
 
     @Override
     public void guardar(PersonaTo persona) {
@@ -55,20 +52,26 @@ public class PersonaServiceImpl implements IPersonaService {
 
     @Override
     public List<PersonaTo> buscarTodos() {
-        List<Persona> personas = this.iPersonaRepository.buscarTodos();
-        return personas.stream().map(this.mapTo).toList();
+        return this.iPersonaRepository.buscarTodos()
+                .stream()
+                .map(mapTo)
+                .collect(Collectors.toList());
     }
  
     @Override
     public List<PersonaTo> buscarPorNombre(String nombre) {
-        List<Persona> personas = this.iPersonaRepository.buscarPorNombre(nombre);
-        return personas.stream().map(this.mapTo).toList();
+        return this.iPersonaRepository.buscarPorNombre(nombre)
+                .stream()
+                .map(mapTo)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<PersonaTo> buscarPorNombreApellido(String nombre, String apellido) {
-        List<Persona> personas = this.iPersonaRepository.buscarPorNombreApellido(nombre, apellido);
-        return personas.stream().map(this.mapTo).toList();
+        return this.iPersonaRepository.buscarPorNombreApellido(nombre,apellido)
+                .stream()
+                .map(mapTo)
+                .collect(Collectors.toList());
     }
 
 
