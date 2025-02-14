@@ -3,6 +3,7 @@ package uce.edu.web.api.controller;
 import java.util.List;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
@@ -32,7 +33,6 @@ import uce.edu.web.api.service.to.PersonaTo;
 
             // return
             // Response.status(Response.Status.OK).entity(this.iPersonaService.buscarPorId(id)).build();
-    
         }
     
         @GET
@@ -58,6 +58,7 @@ import uce.edu.web.api.service.to.PersonaTo;
     
         @POST
         @Path("")
+        @Consumes(MediaType.APPLICATION_XML)
         public void guardar(PersonaTo persona) {
             this.iPersonaService.guardar(persona);
         }
@@ -70,12 +71,14 @@ import uce.edu.web.api.service.to.PersonaTo;
         }
     
         @PATCH
-        @Path("/{id}/nuevo/{cedula}")
-        public void actualizarParcial(PersonaTo persona, @PathParam("id") Integer id, @PathParam("cedula") String cedula) {
-            System.out.println(cedula);
+        @Path("/{id}")
+        @Consumes(MediaType.APPLICATION_XML)
+        @Produces(MediaType.APPLICATION_JSON)
+        public PersonaTo actualizarParcial(PersonaTo persona, @PathParam("id") Integer id) {
             PersonaTo tmp = this.iPersonaService.buscarPorId(id);
             tmp.setNombre(persona.getNombre());
             this.iPersonaService.actualizar(tmp);
+            return tmp;
         }
     
         @DELETE
