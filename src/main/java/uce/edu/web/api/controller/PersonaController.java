@@ -26,7 +26,7 @@ import uce.edu.web.api.service.to.PersonaTo;
     
         @GET
         @Path("/{id}")
-        @Produces(MediaType.APPLICATION_XML)
+        @Produces(MediaType.APPLICATION_JSON)
         public Response buscarPorId(@PathParam("id") Integer id) {
             return Response.status(240).header("mensaje", "Persona creada pero en proceso de validacion...")
                     .header("valor1",500).entity(this.iPersonaService.buscarPorId(id)).build();
@@ -58,7 +58,7 @@ import uce.edu.web.api.service.to.PersonaTo;
     
         @POST
         @Path("")
-        @Consumes(MediaType.APPLICATION_XML)
+        @Consumes(MediaType.APPLICATION_JSON)
         public void guardar(PersonaTo persona) {
             this.iPersonaService.guardar(persona);
         }
@@ -72,7 +72,7 @@ import uce.edu.web.api.service.to.PersonaTo;
     
         @PATCH
         @Path("/{id}")
-        @Consumes(MediaType.APPLICATION_XML)
+        @Consumes(MediaType.APPLICATION_JSON)
         @Produces(MediaType.APPLICATION_JSON)
         public PersonaTo actualizarParcial(PersonaTo persona, @PathParam("id") Integer id) {
             PersonaTo tmp = this.iPersonaService.buscarPorId(id);
